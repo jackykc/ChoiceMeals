@@ -1,6 +1,7 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from graphql_relay.node.node import from_global_id
+from django.contrib.auth.models import User
 import json
 
 from .models import Category, Ingredient
@@ -13,21 +14,25 @@ class IngredientType(DjangoObjectType):
     class Meta:
         model = Ingredient
 
+class UserType(DjangoObjectType):
+    class Meta:
+        model = User
+
 class Query(graphene.AbstractType):
     category = graphene.Field(CategoryType,
-                              id=graphene.Int(),
+                              id=graphene.ID(),
                               name=graphene.String()
                               )
 
     ingredient = graphene.Field(IngredientType,
-                              id=graphene.Int(),
+                              id=graphene.ID(),
                               name=graphene.String()
                               )
-
     
     all_categories = graphene.List(CategoryType)
     all_ingredients = graphene.List(IngredientType)
-
+    current_user = graphene.Field(UserType)
+    
     def resolve_category(self, info, **kwargs):
         id = kwargs.get('id')
         name = kwargs.get('name')
@@ -51,6 +56,11 @@ class Query(graphene.AbstractType):
             return Ingredient.objects.get(name=name)
 
         return None
+
+    def resolve_current_user(self, info, **kwargs):
+        if not info.context.user.is_authenticated:
+            return None
+        return info.context.user
 
     def resolve_all_categories(self, info, **kwargs):
         return Category.objects.all()

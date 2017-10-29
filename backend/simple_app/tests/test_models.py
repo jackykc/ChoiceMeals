@@ -5,6 +5,6 @@ from mixer.backend.django import mixer
 pytestmark = pytest.mark.django_db
 
 
-def test_message():
-    obj = mixer.blend('simple_app.Message')
+def test_ingredient():
+    obj = mixer.blend('simple_app.Ingredient')
     assert obj.pk > 0
