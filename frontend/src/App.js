@@ -23,6 +23,7 @@ const httpLink = createHttpLink({
 });
 
 const token = localStorage.getItem('token');
+const JWTToken = `JWT ${token}`
 
 const middlewareLink = new ApolloLink((operation, forward) => {
   operation.setContext({
@@ -49,7 +50,6 @@ const client = new ApolloClient({
 
 class App extends Component {
     render() {
-        console.log(middlewareLink.operation);
         return (
             <ApolloProvider client={client}>
                 <Router>

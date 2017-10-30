@@ -9,12 +9,11 @@ class LoginView extends React.Component {
 			body: data,
 		})
 			.then(res => {
-				console.log(res);
 				res.json().then(res => {
 					if(res.token) {
 						localStorage.setItem('token', res.token);
 						
-						// window.location.replace('/');
+						window.location.replace('/');
 					}
 				})
 			})

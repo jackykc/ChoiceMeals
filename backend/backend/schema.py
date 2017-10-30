@@ -7,10 +7,10 @@ class Queries(
 ):
     pass
 
-# class Mutations(
-#     simple_app.schema.Mutation,
-#     graphene.ObjectType,
-# ):
-#     pass
+class Mutations(
+    simple_app.schema.Mutation,
+    graphene.ObjectType,
+):
+    pass
     
-schema = graphene.Schema(query=Queries)
+schema = graphene.Schema(query=Queries, mutation=Mutations)

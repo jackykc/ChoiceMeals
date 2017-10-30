@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag';
 
 const query = gql`
-{
+query {
   currentUser {
     id
   }
@@ -13,9 +13,10 @@ const query = gql`
 
 class CreateView extends React.Component {
 	componentWillUpdate(nextProps) {
+		console.log(nextProps);
 		if(!nextProps.data.loading && nextProps.data.currentUser === null) {
-			console.log("nothing")
 			// window.location.replace('/login/')
+			console.log("No");
 		}
 	}
 
